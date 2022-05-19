@@ -3,13 +3,16 @@ description: Facilitator for having a Splash screen with a Flare animation until
 version: 3.0.1
 author: jaumard <jimmy.aumard@gmail.com>
 homepage: https://github.com/jaumard/flare_splash_screen
+publish_to: none
 
 environment:
   sdk: ">=2.1.0 <3.0.0"
   flutter: ">=1.7.8 <2.0.0"
 
 dependencies:
-  flare_loading: ^2.1.1
+  flare_loading:
+    git:
+      url: https://github.com/Lomski/flare_loading # Repo
     #path: '../flare_loading'
   flutter:
     sdk: flutter
