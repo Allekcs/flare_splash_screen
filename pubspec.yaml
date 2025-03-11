@@ -12,8 +12,8 @@ environment:
 dependencies:
   flare_loading:
     git:
-      url: https://github.com/Lomski/flare_loading # Repo
-    #path: '../flare_loading'
+      url: https://github.com/Allekcs/flare_loading
+      path: flare_loading
   flutter:
     sdk: flutter
 
