@@ -11,12 +11,6 @@ class SplashScreen extends StatelessWidget {
   final double? width;
   final double? height;
   final Color? backgroundColor;
-  final WidgetBuilder? next;
-  final Function(dynamic data)? onSuccess;
-  final Function(dynamic error, dynamic stacktrace)? onError;
-  final double? width;
-  final double? height;
-  final Color? backgroundColor;
   final Alignment alignment;
   final Future<void> Function()? until;
   final String? loopAnimation;
@@ -34,23 +28,10 @@ class SplashScreen extends StatelessWidget {
     Key? key,
     Future Function()? until,
     bool? isLoading,
-    required String name,
-    required Function(dynamic data) onSuccess,
-    required Function(dynamic error, dynamic stacktrace) onError,
-    Key? key,
-    Future Function()? until,
-    bool? isLoading,
     BoxFit fit = BoxFit.contain,
     Color? backgroundColor,
     String? loopAnimation,
-    Color? backgroundColor,
-    String? loopAnimation,
     Alignment alignment = Alignment.center,
-    double? width,
-    double? height,
-    String? endAnimation,
-    RouteTransitionsBuilder? transitionsBuilder,
-    String? startAnimation,
     double? width,
     double? height,
     String? endAnimation,
@@ -76,30 +57,22 @@ class SplashScreen extends StatelessWidget {
     );
   }
 
-  factory SplashScreen.navigate({
-    required String name,
-    required WidgetBuilder next,
-    Key? key,
-    bool? isLoading,
-    Color? backgroundColor,
-    Future Function()? until,
-    String? loopAnimation,
-    required String name,
-    required WidgetBuilder next,
-    Key? key,
-    bool? isLoading,
-    Color? backgroundColor,
-    Future Function()? until,
-    String? loopAnimation,
-    Alignment alignment = Alignment.center,
-    BoxFit fit = BoxFit.contain,
-    double? width,
-    double? height,
-    String? endAnimation,
-    RouteTransitionsBuilder? transitionsBuilder,
-    RouteSettings? routeSettings,
-    String? startAnimation
-  }) {
+  factory SplashScreen.navigate(
+      {required String name,
+      required WidgetBuilder next,
+      Key? key,
+      bool? isLoading,
+      Color? backgroundColor,
+      Future Function()? until,
+      String? loopAnimation,
+      Alignment alignment = Alignment.center,
+      BoxFit fit = BoxFit.contain,
+      double? width,
+      double? height,
+      String? endAnimation,
+      RouteTransitionsBuilder? transitionsBuilder,
+      RouteSettings? routeSettings,
+      String? startAnimation}) {
     return SplashScreen(
       name,
       next,
@@ -124,7 +97,6 @@ class SplashScreen extends StatelessWidget {
     this.name,
     this.next, {
     this.loopAnimation,
-    Key? key,
     Key? key,
     this.isLoading,
     this.backgroundColor,
@@ -168,7 +140,7 @@ class SplashScreen extends StatelessWidget {
 
   _goToNext(BuildContext context, data) {
     if (next == null) {
-      onSuccess!(data);
+      onSuccess(data);
     } else {
       Navigator.of(context).pushReplacement(
         PageRouteBuilder(
@@ -178,7 +150,6 @@ class SplashScreen extends StatelessWidget {
               ? (_, Animation<double> animation, __, Widget child) {
                   return FadeTransition(opacity: animation, child: child);
                 }
-              : transitionsBuilder!,
               : transitionsBuilder!,
         ),
       );
