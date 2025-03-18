@@ -6,6 +6,12 @@ import 'package:flutter/material.dart';
 class SplashScreen extends StatelessWidget {
   final String name;
   final WidgetBuilder? next;
+  final Function(dynamic data) onSuccess;
+  final Function(dynamic error, dynamic stacktrace) onError;
+  final double? width;
+  final double? height;
+  final Color? backgroundColor;
+  final WidgetBuilder? next;
   final Function(dynamic data)? onSuccess;
   final Function(dynamic error, dynamic stacktrace)? onError;
   final double? width;
@@ -28,10 +34,23 @@ class SplashScreen extends StatelessWidget {
     Key? key,
     Future Function()? until,
     bool? isLoading,
+    required String name,
+    required Function(dynamic data) onSuccess,
+    required Function(dynamic error, dynamic stacktrace) onError,
+    Key? key,
+    Future Function()? until,
+    bool? isLoading,
     BoxFit fit = BoxFit.contain,
     Color? backgroundColor,
     String? loopAnimation,
+    Color? backgroundColor,
+    String? loopAnimation,
     Alignment alignment = Alignment.center,
+    double? width,
+    double? height,
+    String? endAnimation,
+    RouteTransitionsBuilder? transitionsBuilder,
+    String? startAnimation,
     double? width,
     double? height,
     String? endAnimation,
@@ -58,6 +77,13 @@ class SplashScreen extends StatelessWidget {
   }
 
   factory SplashScreen.navigate({
+    required String name,
+    required WidgetBuilder next,
+    Key? key,
+    bool? isLoading,
+    Color? backgroundColor,
+    Future Function()? until,
+    String? loopAnimation,
     required String name,
     required WidgetBuilder next,
     Key? key,
@@ -99,6 +125,7 @@ class SplashScreen extends StatelessWidget {
     this.next, {
     this.loopAnimation,
     Key? key,
+    Key? key,
     this.isLoading,
     this.backgroundColor,
     this.until,
@@ -109,13 +136,11 @@ class SplashScreen extends StatelessWidget {
     this.routeSettings,
     this.endAnimation,
     this.startAnimation,
-    this.onSuccess,
-    this.onError,
-    this.fit,
-  })  : assert(!(isLoading != null && until != null),
-            'isLoading and until are exclusive, pick one ;)'),
-        assert(!(isLoading == null && until == null),
-            'isLoading and until are null, pick one ;)'),
+    required this.onSuccess,
+    required this.onError,
+    this.fit = BoxFit.contain,
+  })  : assert(!(isLoading != null && until != null), 'isLoading and until are exclusive, pick one ;)'),
+        assert(!(isLoading == null && until == null), 'isLoading and until are null, pick one ;)'),
         super(key: key);
 
   @override
@@ -132,9 +157,7 @@ class SplashScreen extends StatelessWidget {
         onSuccess: (data) {
           _goToNext(context, data);
         },
-        onError: (err, stack) {
-          onError!(err, stack);
-        },
+        onError: (err, stack) => onError(err, stack),
         name: name,
         alignment: alignment,
         until: until,
@@ -155,6 +178,7 @@ class SplashScreen extends StatelessWidget {
               ? (_, Animation<double> animation, __, Widget child) {
                   return FadeTransition(opacity: animation, child: child);
                 }
+              : transitionsBuilder!,
               : transitionsBuilder!,
         ),
       );
