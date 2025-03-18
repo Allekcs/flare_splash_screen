@@ -17,9 +17,8 @@ class MyApp extends StatelessWidget {
         builder: (context) => SplashScreen.callback(
           name: 'intro.flr',
           onSuccess: (_) {
-            Navigator.of(context).pushReplacement(PageRouteBuilder(
-                pageBuilder: (_, __, ___) =>
-                    MyHomePage(title: 'Flutter Demo Home Page')));
+            Navigator.of(context).pushReplacement(
+                PageRouteBuilder(pageBuilder: (_, __, ___) => MyHomePage(title: 'Flutter Demo Home Page')));
           },
           loopAnimation: '1',
           until: () => Future.delayed(Duration(seconds: 1)),
@@ -34,7 +33,7 @@ class MyApp extends StatelessWidget {
 }
 
 class MyHomePage extends StatefulWidget {
-  MyHomePage({Key key, this.title}) : super(key: key);
+  MyHomePage({Key? key, required this.title}) : super(key: key);
   final String title;
 
   @override
@@ -65,7 +64,7 @@ class _MyHomePageState extends State<MyHomePage> {
             ),
             Text(
               '$_counter',
-              style: Theme.of(context).textTheme.display1,
+              style: Theme.of(context).textTheme.displayMedium,
             ),
           ],
         ),
